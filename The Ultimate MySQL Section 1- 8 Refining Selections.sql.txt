@@ -1,0 +1,97 @@
+CREATE TABLE sakila.books 
+	(
+		book_id INT NOT NULL AUTO_INCREMENT,
+		title VARCHAR(100),
+		author_fname VARCHAR(100),
+		author_lname VARCHAR(100),
+		released_year INT,
+		stock_quantity INT,
+		pages INT,
+		PRIMARY KEY(book_id)
+	);
+
+INSERT INTO sakila.books (title, author_fname, author_lname, released_year, stock_quantity, pages)
+VALUES
+('The Namesake', 'Jhumpa', 'Lahiri', 2003, 32, 291),
+('Norse Mythology', 'Neil', 'Gaiman',2016, 43, 304),
+('American Gods', 'Neil', 'Gaiman', 2001, 12, 465),
+('Interpreter of Maladies', 'Jhumpa', 'Lahiri', 1996, 97, 198),
+('A Hologram for the King: A Novel', 'Dave', 'Eggers', 2012, 154, 352),
+('The Circle', 'Dave', 'Eggers', 2013, 26, 504),
+('The Amazing Adventures of Kavalier & Clay', 'Michael', 'Chabon', 2000, 68, 634),
+('Just Kids', 'Patti', 'Smith', 2010, 55, 304),
+('A Heartbreaking Work of Staggering Genius', 'Dave', 'Eggers', 2001, 104, 437),
+('Coraline', 'Neil', 'Gaiman', 2003, 100, 208),
+('What We Talk About When We Talk About Love: Stories', 'Raymond', 'Carver', 1981, 23, 176),
+("Where I'm Calling From: Selected Stories", 'Raymond', 'Carver', 1989, 12, 526),
+('White Noise', 'Don', 'DeLillo', 1985, 49, 320),
+('Cannery Row', 'John', 'Steinbeck', 1945, 95, 181),
+('Oblivion: Stories', 'David', 'Foster Wallace', 2004, 172, 329),
+('Consider the Lobster', 'David', 'Foster Wallace', 2005, 92, 343);
+
+
+SELECT book_id, title, author_fname, author_lname, released_year, stock_quantity, pages
+FROM sakila.books;
+
+
+SELECT 
+    CONCAT_WS(' - ', title, author_fname, author_lname) 
+FROM sakila.books;
+
+
+SELECT UPPER(REVERSE('Why does my cat look at me with such hatred?'));
+
+-- To select books with '%' in their title:
+SELECT * FROM books
+WHERE title LIKE '%\%%';
+ 
+-- To select books with an underscore '_' in title:
+SELECT * FROM books
+WHERE title LIKE '%\_%';
+
+-- To select Titles that contains 'stories'
+SELECT  title
+FROM sakila.books where title like '%stories%';
+
+-- FAQ 
+-- Find the title that has longest Name 
+SELECT  title
+FROM sakila.books order by length(title) desc 
+limit 1;
+
+-- FAQ
+-- Find the title that has second longest Name 
+SELECT  title
+FROM sakila.books order by length(title) desc 
+limit 2,1;
+
+-- Print a summary containing the title and year for the 3 most recent books. 
+select CONCAT(title, ' - ',  released_year) AS  'SUMMARY' 
+FROM sakila.books
+order by released_year desc 
+limit 3 ;
+
+-- Find all books with an author_name that contains a space(" ")
+SELECT  author_lname
+FROM sakila.books
+where author_lname like '% %';
+
+-- Find three books with the lowest stock 
+SELECT  title,  released_year, stock_quantity
+FROM sakila.books
+order by stock_quantity limit 3;
+
+-- Print title and author_lname sorted first by author_lname and then by title. 
+SELECT  title,  author_lname
+FROM sakila.books
+order by author_lname, title 
+
+-- Sort alphabetically by lastnmae and keep alias as Yell and add My favourit author in every column 
+SELECT  concat ('MY FAVORITE AUTHOR IS ', author_fname, ' ', author_lname,' !') as yell
+FROM sakila.books
+order by author_lname ASC 
+
+
+
+
+
